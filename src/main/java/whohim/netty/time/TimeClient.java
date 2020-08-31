@@ -11,7 +11,6 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 
 /**
  * @author WhomHim
- * @description
  * @date Create in 2020-8-30 23:05:30
  */
 public class TimeClient {
@@ -22,19 +21,19 @@ public class TimeClient {
         EventLoopGroup workerGroup = new NioEventLoopGroup();
 
         try {
-            Bootstrap b = new Bootstrap(); // (1)
-            b.group(workerGroup); // (2)
-            b.channel(NioSocketChannel.class); // (3)
-            b.option(ChannelOption.SO_KEEPALIVE, true); // (4)
+            Bootstrap b = new Bootstrap();
+            b.group(workerGroup);
+            b.channel(NioSocketChannel.class);
+            b.option(ChannelOption.SO_KEEPALIVE, true);
             b.handler(new ChannelInitializer<SocketChannel>() {
                 @Override
-                public void initChannel(SocketChannel ch) throws Exception {
+                public void initChannel(SocketChannel ch) {
                     ch.pipeline().addLast(new TimeClientHandler());
                 }
             });
 
             // 启动客户端
-            ChannelFuture f = b.connect(host, port).sync(); // (5)
+            ChannelFuture f = b.connect(host, port).sync();
 
             // 等待连接关闭
             f.channel().closeFuture().sync();
