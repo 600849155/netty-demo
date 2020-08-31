@@ -34,6 +34,7 @@ public class HelloWorldServer {
                     .localAddress(new InetSocketAddress(port))
                     .childHandler(new ChannelInitializer<SocketChannel>() {
 
+                        @Override
                         protected void initChannel(SocketChannel ch) {
                             ch.pipeline().addLast("decoder", new StringDecoder());
                             ch.pipeline().addLast("encoder", new StringEncoder());
